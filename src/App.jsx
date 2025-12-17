@@ -258,13 +258,13 @@ function App() {
                 Contact Me
               </a>
               <a 
-  href="/cv_jonathan.pdf"  // Pastikan huruf kecil semua sesuai nama file baru
-  download="CV_Jonathan_Sutandar.pdf" // Nama saat didownload user (boleh bebas)
-  className="btn-secondary" 
-  style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
->
-  <Download size={18} /> CV
-</a>
+                href="/CV_Jonathan.pdf" 
+                download="CV_Jonathan_Sutandar.pdf"
+                className="btn-secondary" 
+                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+                >
+                <Download size={18} /> CV
+              </a>
             </div>
           </motion.div>
         </section>
