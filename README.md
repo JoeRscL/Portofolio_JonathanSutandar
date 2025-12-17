@@ -1,16 +1,73 @@
-# React + Vite
+# 🌐 Personal Portfolio Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Website portofolio pribadi yang modern dan interaktif, dirancang untuk menampilkan pengalaman kerja, proyek, dan keahlian teknis saya sebagai **Frontend Developer**.
 
-Currently, two official plugins are available:
+Website ini dibangun dengan fokus pada performa yang cepat, animasi yang halus, dan desain antarmuka yang elegan menggunakan gaya *Glassmorphism* dan tema gelap.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Live Demo
 
-## React Compiler
+[Masukkan Link Vercel Kamu Di Sini]
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Fitur Utama
 
-## Expanding the ESLint configuration
+* **Responsive Design:** Tampilan yang menyesuaikan dengan sempurna di Desktop, Tablet, dan Mobile.
+* **Smooth Animations:** Animasi transisi halaman dan elemen menggunakan **Framer Motion**.
+* **Glassmorphism UI:** Desain modern dengan efek kaca transparan dan *aurora background*.
+* **Project Showcase:** Galeri proyek dengan link ke repositori GitHub dan demo langsung.
+* **Interactive Contact:** Tombol kontak langsung ke WhatsApp, Email, dan LinkedIn.
+* **Downloadable CV:** Fitur unduh Resume/CV langsung dari website.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Teknologi yang Digunakan
+
+Project ini dibangun menggunakan *tech stack* modern berikut:
+
+* **[React.js](https://reactjs.org/)** - Library JavaScript utama untuk membangun antarmuka pengguna.
+* **[Vite](https://vitejs.dev/)** - Build tool yang sangat cepat untuk pengembangan frontend modern.
+* **[Framer Motion](https://www.framer.com/motion/)** - Library untuk menangani animasi kompleks dan transisi.
+* **[Lucide React](https://lucide.dev/)** - Koleksi ikon open-source yang ringan dan konsisten.
+* **CSS3** - Custom styling untuk layout, *glass effect*, dan responsivitas.
+
+## 📂 Struktur Proyek
+
+Berikut adalah gambaran singkat isi website ini:
+
+1.  **Hero Section:** Perkenalan diri, status ketersediaan (*available for work*), dan tombol aksi cepat.
+2.  **Experience:** Riwayat pekerjaan profesional secara kronologis.
+3.  **Selected Projects:** Daftar proyek unggulan (Web, Android, AI/ML, Game Dev).
+4.  **Technical Skills:** Daftar kemampuan teknis yang dikelompokkan (Languages, Frameworks, Tools).
+5.  **Contact:** Informasi kontak media sosial dan profesional.
+
+## 📦 Cara Menjalankan di Lokal
+
+Jika ingin menjalankan project ini di komputer Anda, ikuti langkah berikut:
+
+1.  **Clone repository ini:**
+    ```bash
+    git clone [https://github.com/username-anda/nama-repo.git](https://github.com/username-anda/nama-repo.git)
+    ```
+
+2.  **Masuk ke direktori project:**
+    ```bash
+    cd nama-repo
+    ```
+
+3.  **Install dependencies:**
+    ```bash
+    npm install
+    # atau
+    yarn install
+    ```
+
+4.  **Jalankan server development:**
+    ```bash
+    npm run dev
+    ```
+
+5.  Buka browser dan akses `http://localhost:5173`.
+
+## 📄 Lisensi
+
+Project ini dibuat oleh **Jonathan Sutandar**. Silakan gunakan sebagai referensi atau pembelajaran.
+
+---
+*Dibuat dengan ❤️ menggunakan React & Vite.*
