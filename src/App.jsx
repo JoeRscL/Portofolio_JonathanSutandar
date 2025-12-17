@@ -257,7 +257,12 @@ function App() {
               <a href="#contact" className="btn-primary">
                 Contact Me
               </a>
-              <a href="src\assets\CV_JonathanSutandar (2).pdf" download className="btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <a 
+                href="/CV_Jonathan.pdf" 
+                download="CV_Jonathan_Sutandar.pdf"
+                className="btn-secondary" 
+                style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+                >
                 <Download size={18} /> CV
               </a>
             </div>
