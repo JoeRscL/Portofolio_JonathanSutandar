@@ -104,14 +104,18 @@ const DATA = {
 }
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
+  // Deteksi ukuran layar
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    // Set awal
+    handleResize()
+    
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   const navLinks = [
@@ -129,14 +133,19 @@ const Navbar = () => {
       transition={{ duration: 0.8 }}
       style={{
         position: 'fixed',
-        top: '30px', // JARAK DARI ATAS LAYAR (Lebih turun)
+        top: '30px',
         left: '50%',
         transform: 'translateX(-50%)',
         zIndex: 100,
         display: 'flex',
-        gap: '24px', // JARAK ANTAR MENU (Lebih renggang)
-        padding: '14px 32px', // UKURAN KOTAK NAVBAR (Lebih besar/lega)
-        background: 'rgba(255, 255, 255, 0.05)', // Lebih transparan sedikit
+        // Jika mobile, gap lebih kecil
+        gap: isMobile ? '16px' : '24px', 
+        // Jika mobile, padding lebih tipis
+        padding: isMobile ? '12px 24px' : '14px 32px',
+        // Jika mobile, lebar maksimal 90% layar agar tidak kepotong
+        maxWidth: '90%',
+        width: isMobile ? 'max-content' : 'auto',
+        background: 'rgba(255, 255, 255, 0.05)',
         backdropFilter: 'blur(12px)',
         borderRadius: '100px',
         border: '1px solid rgba(255, 255, 255, 0.08)',
@@ -167,9 +176,8 @@ const Navbar = () => {
           }}
         >
           <item.icon size={18} />
-          {/* Teks hanya muncul di layar besar agar tidak sempit di HP, 
-              tapi untuk sekarang saya biarkan muncul sesuai request */}
-          <span className="nav-text">{item.name}</span> 
+          {/* LOGIKA RESPONSIF: Teks disembunyikan jika di HP (isMobile true) */}
+          {!isMobile && <span className="nav-text">{item.name}</span>}
         </a>
       ))}
     </motion.nav>
@@ -179,6 +187,8 @@ const Navbar = () => {
 const ListItem = ({ title, subtitle, period, desc, icon: Icon }) => (
   <div style={{ 
     display: 'flex', 
+    // Bungkus (wrap) jika layar kecil agar ikon tetap di atas/samping
+    flexDirection: 'row', 
     gap: '20px', 
     padding: '24px 0', 
     borderBottom: '1px solid rgba(255,255,255,0.05)'
@@ -194,6 +204,7 @@ const ListItem = ({ title, subtitle, period, desc, icon: Icon }) => (
       <h4 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#fff', marginBottom: '4px' }}>{title}</h4>
       <div style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '8px', flexWrap: 'wrap' }}>
         <span style={{ color: '#94a3b8', fontSize: '0.9rem' }}>{subtitle}</span>
+        {/* Sembunyikan titik pembatas di layar sangat kecil jika perlu, tapi flexWrap aman */}
         <span style={{ width: '4px', height: '4px', background: '#333', borderRadius: '50%' }}></span>
         <span style={{ color: '#525252', fontSize: '0.85rem' }}>{period}</span>
       </div>
@@ -209,18 +220,30 @@ const ContactCard = ({ icon: Icon, title, value, link, color }) => (
   }}>
     <div style={{
       width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)',
-      display: 'flex', alignItems: 'center', justifyContent: 'center', color: color
+      display: 'flex', alignItems: 'center', justifyContent: 'center', color: color,
+      flexShrink: 0 // Agar icon tidak gepeng di layar kecil
     }}>
       <Icon size={20} />
     </div>
-    <div>
+    <div style={{ overflow: 'hidden' }}>
       <span style={{ display: 'block', fontSize: '0.85rem', color: '#94a3b8', marginBottom: '2px' }}>{title}</span>
-      <span style={{ color: '#fff', fontWeight: 500, fontSize: '0.95rem' }}>{value}</span>
+      {/* Text ellipsis agar tidak merusak layout jika email kepanjangan */}
+      <span style={{ color: '#fff', fontWeight: 500, fontSize: '0.95rem', display: 'block', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>{value}</span>
     </div>
   </a>
 )
 
 function App() {
+  // State untuk deteksi mobile di component utama
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   return (
     <div className="app">
       <Navbar />
@@ -230,10 +253,10 @@ function App() {
         <div className="aurora-blob blob-2"></div>
       </div>
 
-      {/* PADDING TOP DIUBAH DARI 100px JADI 180px AGAR JARAK DENGAN NAVBAR LEGA */}
-      <main className="container" style={{ paddingBottom: '100px', paddingTop: '180px' }}>
+      {/* PADDING TOP DINAMIS: 180px di PC, 120px di HP agar tidak terlalu jauh */}
+      <main className="container" style={{ paddingBottom: '100px', paddingTop: isMobile ? '120px' : '180px', paddingLeft: '20px', paddingRight: '20px' }}>
         
-        <section style={{ marginBottom: '100px', textAlign: 'center' }}>
+        <section style={{ marginBottom: isMobile ? '60px' : '100px', textAlign: 'center' }}>
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -244,21 +267,29 @@ function App() {
               {DATA.status}
             </div>
 
-            <h1 style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '24px' }}>
+            {/* Font Size sudah responsive pakai clamp, aman */}
+            <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1.1, marginBottom: '24px' }}>
               <span className="text-gradient">Designing the</span><br />
               <span className="text-gradient-blue">Future Web.</span>
             </h1>
             
-            <p style={{ maxWidth: '600px', margin: '0 auto 40px auto', fontSize: '1.2rem', color: '#94a3b8' }}>
+            <p style={{ maxWidth: '600px', margin: '0 auto 40px auto', fontSize: isMobile ? '1rem' : '1.2rem', color: '#94a3b8', padding: '0 10px' }}>
               Hi, I'm <b>{DATA.name}</b>. {DATA.about}
             </p>
 
-            <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <div style={{ 
+              display: 'flex', 
+              gap: '16px', 
+              justifyContent: 'center', 
+              flexWrap: 'wrap', 
+              position: 'relative', // Penting agar tombol bisa diklik
+              zIndex: 10 
+            }}>
               <a href="#contact" className="btn-primary">
                 Contact Me
               </a>
               <a 
-                href="/CV_Jonathan.pdf" 
+                href="/cv_jonathan.pdf" 
                 download="CV_Jonathan_Sutandar.pdf"
                 className="btn-secondary" 
                 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
@@ -277,7 +308,7 @@ function App() {
           style={{ marginBottom: '80px', maxWidth: '800px', margin: '0 auto 80px auto', scrollMarginTop: '150px' }}
         >
            <h3 style={{ fontSize: '1.5rem', marginBottom: '24px', color: '#fff', textAlign: 'center' }}>Work Experience</h3>
-          <div className="glass-card" style={{ padding: '10px 30px' }}>
+          <div className="glass-card" style={{ padding: isMobile ? '10px 15px' : '10px 30px' }}>
             {DATA.experience.map((exp, i) => (
               <ListItem key={i} title={exp.role} subtitle={exp.company} period={exp.period} desc={exp.desc} icon={Briefcase} />
             ))}
@@ -307,7 +338,8 @@ function App() {
                   background: 'linear-gradient(180deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0) 100%)',
                   width: '100%',
                   maxWidth: '400px', 
-                  flex: '1 1 350px' 
+                  // Responsif: Min-width dikecilkan agar muat di HP kecil
+                  flex: '1 1 280px' 
                 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '20px' }}>
@@ -370,7 +402,8 @@ function App() {
 
         <section id="contact" style={{ marginBottom: '60px', scrollMarginTop: '150px' }}>
            <h3 style={{ fontSize: '1.5rem',marginTop:'100px', marginBottom: '32px', color: '#fff', textAlign: 'center' }}>Get in Touch</h3>
-           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+           {/* Grid otomatis menyesuaikan kolom di HP */}
+           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
               <ContactCard 
                 icon={MessageCircle} 
                 title="Chat on WhatsApp" 
