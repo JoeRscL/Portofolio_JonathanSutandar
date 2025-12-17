@@ -6,7 +6,7 @@ Website ini dibangun dengan fokus pada performa yang cepat, animasi yang halus, 
 
 ## 🚀 Live Demo
 
-[Masukkan Link Vercel Kamu Di Sini]
+(https://portofolio-jonathansutandar.vercel.app/)
 
 ## ✨ Fitur Utama
 
@@ -43,7 +43,7 @@ Jika ingin menjalankan project ini di komputer Anda, ikuti langkah berikut:
 
 1.  **Clone repository ini:**
     ```bash
-    git clone [https://github.com/username-anda/nama-repo.git](https://github.com/username-anda/nama-repo.git)
+    git clone (https://github.com/JoeRscL/Portofolio_JonathanSutandar)
     ```
 
 2.  **Masuk ke direktori project:**
