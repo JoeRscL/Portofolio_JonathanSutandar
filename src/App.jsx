@@ -297,7 +297,7 @@ function App() {
               </a>
               <a 
                 href="/resume.pdf" 
-                download="CV_Jonathan_Sutandar.pdf"
+                download="resume.pdf"
                 className="btn-secondary" 
                 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
                 >
