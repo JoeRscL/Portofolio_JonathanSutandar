@@ -81,7 +81,14 @@ const DATA = {
       tags: ["C#", "Unity"],
       link: "https://drive.google.com/drive/folders/1wBj-vOoTfey1m58G9oztASJ0dYKhFBEG?usp=sharing",
       featured: true 
-    }
+    },
+    {
+      title: "Design UI/UX Aplikasi Unity HUB",
+      desc: "Aplikasi yang digunakan untuk melihat event, mengajar, mengupload materi yang akan digunakan.",
+      tags: ["UI/UX", "Figma", "Web Design"],
+      link: "https://www.figma.com/proto/WLGWtsssyJ1lq73Fw3lwPT?node-id=0-1&t=At3KullP3gfr5JMs-6",
+      featured: false
+  }
   ],
   
   skills: [
