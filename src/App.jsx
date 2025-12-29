@@ -296,7 +296,7 @@ function App() {
                 Contact Me
               </a>
               <a 
-                href="/cv_jonathan.pdf" 
+                href="/resume.pdf" 
                 download="CV_Jonathan_Sutandar.pdf"
                 className="btn-secondary" 
                 style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
