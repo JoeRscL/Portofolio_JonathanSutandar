@@ -88,7 +88,14 @@ const DATA = {
       tags: ["UI/UX", "Figma", "Web Design"],
       link: "https://www.figma.com/proto/WLGWtsssyJ1lq73Fw3lwPT?node-id=0-1&t=At3KullP3gfr5JMs-6",
       featured: false
-  }
+  },
+  {
+  title: "Cursed Priest",
+  desc: "Game horror 2D tentang pendeta terkutuk yang harus bertahan dan mengungkap misteri gelap.",
+  tags: ["Unity", "C#", "Game Dev"],
+  link: "https://joerscl.itch.io/cursed-priest",
+  featured: true
+}
   ],
   
   skills: [
