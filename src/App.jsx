@@ -91,7 +91,7 @@ const DATA = {
   },
   {
   title: "Cursed Priest",
-  desc: "Game horror 2D tentang pendeta terkutuk yang harus bertahan dan mengungkap misteri gelap.",
+  desc: "Game survival horror sudut pandang orang pertama yang dibuat dengan Unity, menampilkan AI musuh, mekanik stamina, serta eksplorasi lingkungan yang atmosferik..",
   tags: ["Unity", "C#", "Game Dev"],
   link: "https://joerscl.itch.io/cursed-priest",
   featured: true
