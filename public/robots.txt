@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portofolio-jonathansutandar.vercel.app/sitemap.xml

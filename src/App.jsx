@@ -1,199 +1,92 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  ArrowRight,
+  ArrowUp,
   ArrowUpRight,
   Award,
+  ChevronDown,
+  ChevronUp,
   Code2,
-  Cpu,
   Download,
   Gamepad2,
   Github,
-  Globe,
   GraduationCap,
   Linkedin,
-  Mail,
   Menu,
-  MessageCircle,
-  Palette,
-  Smartphone,
-  Terminal,
   X,
 } from 'lucide-react';
+import {
+  CONTACTS,
+  NAV_LINKS,
+  PLATFORM_FILTERS,
+  PLATFORM_ICONS,
+  PORTFOLIO_DATA,
+} from './data/portfolio';
 
-const DATA = {
-  name: 'Jonathan Sutandar',
-  location: 'Tangerang, Indonesia',
-  status: 'Tersedia untuk proyek & kerja sama',
-  social: {
-    github: 'https://github.com/JoeRscL',
-    linkedin: 'https://www.linkedin.com/in/jonathansutandar/',
-    email: 'jonathan20strada@gmail.com',
-    whatsapp: 'https://wa.me/6287871806311',
-    resume: '/resume.pdf',
-  },
-  experience: [
-    {
-      role: 'Treasurer',
-      org: 'Mister & Miss UMN 2025 · Organisasi',
-      period: 'Feb 2025 – Des 2025',
-      desc: 'Mengelola anggaran acara lebih dari Rp300 juta di 5 segmen utama dan 12 divisi, menyusun RAB/PDPAK, serta menegosiasikan vendor.',
-    },
-    {
-      role: 'Team Admin Leader',
-      org: 'PT Sariling Aneka Energi · Pengalaman Kerja',
-      period: 'Jun 2024 – Agu 2024',
-      desc: 'Mengelola unggah produk dan kontrol stok pada platform e-commerce pemerintahan (E-Katalog) dengan data yang akurat.',
-    },
-    {
-      role: 'Mentor',
-      org: 'Character Building Mentoring UMN · Organisasi',
-      period: 'Mar 2024 – Sep 2024',
-      desc: 'Membimbing mahasiswa baru beradaptasi dengan budaya kampus serta memfasilitasi sesi pelatihan soft-skills.',
-    },
-    {
-      role: 'Graphic Design',
-      org: 'PT Sariling Aneka Energi · Pengalaman Kerja',
-      period: 'Okt 2022 – Des 2022',
-      desc: 'Merancang kartu nama dan konten Instagram untuk kebutuhan branding perusahaan.',
-    },
-  ],
-  education: {
-    school: 'Universitas Multimedia Nusantara',
-    degree: 'S1 Informatika',
-    period: 'Agu 2023 – Agu 2027',
-    location: 'Gading Serpong',
-  },
-  certificates: [
-    { name: 'HCIA–openGauss V1.0 (Database Fundamentals)', issuer: 'Huawei' },
-    { name: 'HCIA–AI V3.5 (Artificial Intelligence)', issuer: 'Huawei' },
-    { name: 'Python Intermediate & Introduction', issuer: 'Sololearn' },
-  ],
-  projects: [
-    {
-      title: 'North Sumatra Heritage',
-      desc: 'Portal budaya interaktif yang memvisualisasikan kekayaan Sumatera Utara lewat React dan integrasi API.',
-      tags: ['React', 'API', 'Bootstrap'],
-      link: 'https://uas-pti-2024.vercel.app/',
-      platform: 'Web',
-    },
-    {
-      title: 'MindNest APP',
-      desc: 'Aplikasi Android native untuk jadwal tugas dan pengingat harian dengan sinkronisasi Firebase Realtime Database.',
-      tags: ['Kotlin', 'Firebase', 'XML'],
-      link: 'https://github.com/JoeRscL/UTSMAP',
-      platform: 'Android',
-    },
-    {
-      title: 'Web Kasir & POS',
-      desc: 'Sistem pencatatan pelanggan, stok barang, dan transaksi kasir berbasis Laravel dan MySQL.',
-      tags: ['Laravel', 'PHP', 'SQL'],
-      link: 'https://github.com/JoeRscL/UAS',
-      platform: 'Web',
-    },
-    {
-      title: 'Smishing Detection AI',
-      desc: 'Model machine learning berbasis deep learning untuk mendeteksi pesan SMS phishing (smishing).',
-      tags: ['Python', 'Deep Learning'],
-      link: 'https://github.com/JoeRscL/SmishingDetection_MachineLearning',
-      platform: 'AI/ML',
-    },
-    {
-      title: 'Cursed Priest',
-      desc: 'Game first-person survival horror dengan navigasi AI musuh, sistem stamina, inventaris, dan teka-teki.',
-      tags: ['Unity 3D', 'C#', 'AI State'],
-      link: 'https://joerscl.itch.io/cursed-priest',
-      platform: 'Game',
-    },
-    {
-      title: 'Out Of Wood Game',
-      desc: 'Game survival horror berbasis eksplorasi untuk mengumpulkan item dan menyelesaikan misi.',
-      tags: ['Unity', 'C#'],
-      link: 'https://drive.google.com/drive/folders/1wBj-vOoTfey1m58G9oztASJ0dYKhFBEG?usp=sharing',
-      platform: 'Game',
-    },
-    {
-      title: 'Design UI/UX Unity HUB',
-      desc: 'Prototipe interaktif aplikasi untuk mencari event, mengakses materi belajar, dan berbagi konten.',
-      tags: ['Figma', 'Prototyping'],
-      link: 'https://www.figma.com/proto/WLGWtsssyJ1lq73Fw3lwPT?node-id=0-1&t=At3KullP3gfr5JMs-6',
-      platform: 'UI/UX',
-    },
-  ],
-  skills: [
-    {
-      category: 'Bahasa Pemrograman',
-      icon: Globe,
-      items: ['JavaScript', 'PHP', 'Python', 'Kotlin', 'Java', 'C#', 'C++', 'SQL', 'HTML5', 'CSS3'],
-    },
-    {
-      category: 'Framework & Backend',
-      icon: Code2,
-      items: ['React.js', 'Next.js', 'Laravel', 'Node.js', 'Express.js', 'REST API', 'Firebase', 'Tailwind CSS'],
-    },
-    {
-      category: 'Tools & Platform',
-      icon: Terminal,
-      items: ['Git', 'Unity 3D', 'Android Studio', 'Figma', 'MySQL', 'Adobe Photoshop', 'Adobe Illustrator'],
-    },
-  ],
-};
-
-const NAV_LINKS = [
-  { label: 'Proyek', href: '#proyek' },
-  { label: 'Pengalaman', href: '#pengalaman' },
-  { label: 'Keahlian', href: '#keahlian' },
-  { label: 'Kontak', href: '#kontak' },
-];
-
-const PLATFORM_FILTERS = ['Semua', 'Web', 'Android', 'Game', 'AI/ML', 'UI/UX'];
-
-const PLATFORM_ICONS = {
-  Web: Code2,
-  Android: Smartphone,
-  'AI/ML': Cpu,
-  Game: Gamepad2,
-  'UI/UX': Palette,
-};
+function getInitialFilter() {
+  const param = new URLSearchParams(window.location.search).get('kategori');
+  return PLATFORM_FILTERS.includes(param) ? param : 'Semua';
+}
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [filter, setFilter] = useState('Semua');
+  const [filter, setFilter] = useState(getInitialFilter);
+  const [expandedProject, setExpandedProject] = useState('Cursed Priest');
+  const [activeSection, setActiveSection] = useState(null);
+  const [selectedDiscipline, setSelectedDiscipline] = useState(PORTFOLIO_DATA.disciplines[0].id);
 
-  const visibleProjects =
+  const featuredProject =
+    filter === 'Semua' ? PORTFOLIO_DATA.projects.find((p) => p.featured) : null;
+
+  const gridProjects =
     filter === 'Semua'
-      ? DATA.projects
-      : DATA.projects.filter((project) => project.platform === filter);
+      ? PORTFOLIO_DATA.projects.filter((p) => !p.featured)
+      : PORTFOLIO_DATA.projects.filter((p) => p.platform === filter);
 
-  const contacts = [
-    {
-      label: 'WhatsApp',
-      value: '+62 878-7180-6311',
-      href: DATA.social.whatsapp,
-      icon: MessageCircle,
-      external: true,
-    },
-    {
-      label: 'Email',
-      value: DATA.social.email,
-      href: `mailto:${DATA.social.email}`,
-      icon: Mail,
-      external: false,
-    },
-    {
-      label: 'LinkedIn',
-      value: 'in/jonathansutandar',
-      href: DATA.social.linkedin,
-      icon: Linkedin,
-      external: true,
-    },
-    {
-      label: 'GitHub',
-      value: 'github.com/JoeRscL',
-      href: DATA.social.github,
-      icon: Github,
-      external: true,
-    },
-  ];
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    if (filter === 'Semua') {
+      url.searchParams.delete('kategori');
+    } else {
+      url.searchParams.set('kategori', filter);
+    }
+    window.history.replaceState({}, '', url);
+  }, [filter]);
+
+  useEffect(() => {
+    const sectionIds = NAV_LINKS.map((item) => item.id);
+
+    const updateActiveSection = () => {
+      const scrollY = window.scrollY;
+      if (scrollY < 160) {
+        setActiveSection(null);
+        return;
+      }
+
+      if (window.innerHeight + scrollY >= document.documentElement.scrollHeight - 40) {
+        setActiveSection(sectionIds[sectionIds.length - 1]);
+        return;
+      }
+
+      let current = null;
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (el && el.offsetTop - 140 <= scrollY) {
+          current = id;
+        }
+      }
+      setActiveSection(current);
+    };
+
+    updateActiveSection();
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    return () => window.removeEventListener('scroll', updateActiveSection);
+  }, []);
+
+  const handleDisciplineFilter = (platformId) => {
+    setSelectedDiscipline(platformId);
+    setFilter(platformId);
+    document.getElementById('proyek')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <>
@@ -201,317 +94,550 @@ export default function App() {
         Langsung ke konten utama
       </a>
 
-      <header className="navbar">
-        <div className="container nav-inner">
-          <a href="#beranda" className="nav-logo" onClick={() => setMenuOpen(false)}>
-            <span className="logo-mark" aria-hidden="true">
-              JS
+      <header className="site-header">
+        <div className="wrap nav-bar">
+          <a href="#beranda" className="brand-link" onClick={() => setMenuOpen(false)}>
+            <span className="brand-mark" aria-hidden="true">
+              {PORTFOLIO_DATA.initials}
             </span>
-            <span>{DATA.name}</span>
+            <span>{PORTFOLIO_DATA.name}</span>
           </a>
 
           <nav aria-label="Navigasi utama">
             <ul id="nav-menu" className={`nav-links ${menuOpen ? 'open' : ''}`}>
               {NAV_LINKS.map((item) => (
-                <li key={item.href}>
-                  <a href={item.href} onClick={() => setMenuOpen(false)}>
+                <li key={item.id}>
+                  <a
+                    href={item.href}
+                    className={`nav-link ${activeSection === item.id ? 'is-active' : ''}`}
+                    aria-current={activeSection === item.id ? 'location' : undefined}
+                    onClick={() => setMenuOpen(false)}
+                  >
                     {item.label}
                   </a>
                 </li>
               ))}
+              <li className="nav-cv-mobile">
+                <a
+                  href={PORTFOLIO_DATA.social.resume}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn"
+                  style={{ width: '100%' }}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <Download size={16} aria-hidden="true" />
+                  Unduh CV
+                </a>
+              </li>
             </ul>
           </nav>
 
           <div className="nav-actions">
             <a
-              href={DATA.social.resume}
+              href={PORTFOLIO_DATA.social.resume}
               target="_blank"
               rel="noopener noreferrer"
-              className="nav-cv"
+              className="btn btn--ghost btn--compact nav-cv-desktop"
             >
               <Download size={15} aria-hidden="true" />
-              CV
+              Unduh CV
             </a>
+
             <button
               type="button"
               className="nav-toggle"
-              aria-label={menuOpen ? 'Tutup menu' : 'Buka menu'}
+              aria-label={menuOpen ? 'Tutup menu navigasi' : 'Buka menu navigasi'}
               aria-expanded={menuOpen}
               aria-controls="nav-menu"
               onClick={() => setMenuOpen((open) => !open)}
             >
-              {menuOpen ? <X size={20} aria-hidden="true" /> : <Menu size={20} aria-hidden="true" />}
+              {menuOpen ? <X size={19} aria-hidden="true" /> : <Menu size={19} aria-hidden="true" />}
             </button>
           </div>
         </div>
       </header>
 
-      <main id="main" className="container">
+      <main id="main">
+        {/* HERO */}
         <section id="beranda" className="hero" aria-labelledby="hero-heading">
-          <div className="status-pill">
-            <span className="status-dot" aria-hidden="true" />
-            <span>
-              {DATA.status} · {DATA.location}
-            </span>
-          </div>
-
-          <h1 id="hero-heading" className="hero-title">
-            Membangun web, Android & game{' '}
-            <span className="accent-gradient">yang benar-benar dipakai.</span>
-          </h1>
-
-          <p className="hero-subtitle">
-            Halo, saya <strong>{DATA.name}</strong> — mahasiswa Informatika di UMN yang fokus pada{' '}
-            <strong>Full-Stack Web</strong>, <strong>Android Native</strong>, dan{' '}
-            <strong>Game Development</strong>. Kode ditulis bersih, fungsional, dan siap digunakan.
-          </p>
-
-          <div className="hero-actions">
-            <a href="#proyek" className="btn btn-primary">
-              Lihat Proyek
-              <ArrowRight size={17} aria-hidden="true" />
-            </a>
-            <a
-              href={DATA.social.resume}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-secondary"
-            >
-              <Download size={17} aria-hidden="true" />
-              Unduh CV
-            </a>
-            <a
-              href={DATA.social.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-secondary btn-icon"
-              aria-label="GitHub Jonathan Sutandar"
-            >
-              <Github size={18} aria-hidden="true" />
-            </a>
-            <a
-              href={DATA.social.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-secondary btn-icon"
-              aria-label="LinkedIn Jonathan Sutandar"
-            >
-              <Linkedin size={18} aria-hidden="true" />
-            </a>
-          </div>
-
-          <div className="hero-meta">
+          <div className="wrap hero-grid">
             <div>
-              <span className="meta-label">Fokus Utama</span>
-              <span className="meta-value">Web, Android & Unity 3D</span>
+              <p className="hero-status">
+                <span className="status-dot" aria-hidden="true" />
+                <span>
+                  {PORTFOLIO_DATA.status} · {PORTFOLIO_DATA.location}
+                </span>
+              </p>
+
+              <h1 id="hero-heading" className="hero-title">
+                Membangun aplikasi <span className="hero-title-accent">web, Android</span>, game
+                3D, dan model AI.
+              </h1>
+
+              <p className="hero-summary">{PORTFOLIO_DATA.heroSummary}</p>
+
+              <div className="hero-actions">
+                <a href="#proyek" className="btn">
+                  Lihat Karya
+                </a>
+                <a
+                  href={PORTFOLIO_DATA.social.resume}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--ghost"
+                >
+                  <Download size={16} aria-hidden="true" />
+                  Unduh CV
+                </a>
+                <a
+                  href={PORTFOLIO_DATA.social.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--ghost btn--icon"
+                  aria-label="GitHub Jonathan Sutandar"
+                >
+                  <Github size={18} aria-hidden="true" />
+                </a>
+                <a
+                  href={PORTFOLIO_DATA.social.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn--ghost btn--icon"
+                  aria-label="LinkedIn Jonathan Sutandar"
+                >
+                  <Linkedin size={18} aria-hidden="true" />
+                </a>
+              </div>
             </div>
-            <div>
-              <span className="meta-label">Pendidikan</span>
-              <span className="meta-value">S1 Informatika · UMN</span>
+
+            <aside className="discipline-panel" aria-label="Bidang pengembangan utama">
+              <div className="panel-header">
+                <span>Spektrum Pengembangan</span>
+                <span className="mono">4 Bidang</span>
+              </div>
+              <div className="discipline-list">
+                {PORTFOLIO_DATA.disciplines.map((item) => {
+                  const Icon = item.icon;
+                  const isSelected = selectedDiscipline === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      className={`discipline-item ${isSelected ? 'is-selected' : ''}`}
+                      onClick={() => handleDisciplineFilter(item.id)}
+                    >
+                      <span className="discipline-icon" aria-hidden="true">
+                        <Icon size={15} />
+                      </span>
+                      <span>
+                        <span className="discipline-title" style={{ display: 'block' }}>
+                          {item.title}
+                        </span>
+                        <span className="discipline-stack mono" style={{ display: 'block' }}>
+                          {item.stack}
+                        </span>
+                        <span className="discipline-detail" style={{ display: 'block' }}>
+                          {item.detail}
+                        </span>
+                      </span>
+                      <ArrowUpRight size={15} className="discipline-arrow" aria-hidden="true" />
+                    </button>
+                  );
+                })}
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        {/* ABOUT */}
+        <section id="tentang" className="section section--alt" aria-labelledby="tentang-heading">
+          <div className="wrap">
+            <div className="section-header">
+              <h2 id="tentang-heading" className="section-title">
+                Tentang Saya
+              </h2>
             </div>
-            <div>
-              <span className="meta-label">Domisili</span>
-              <span className="meta-value">{DATA.location}</span>
+
+            <div className="about-grid">
+              <div>
+                <p className="about-lead">{PORTFOLIO_DATA.about.lead}</p>
+                <div className="about-body">
+                  {PORTFOLIO_DATA.about.paragraphs.map((text) => (
+                    <p key={text}>{text}</p>
+                  ))}
+                </div>
+              </div>
+
+              <dl className="facts-grid">
+                {PORTFOLIO_DATA.about.highlights.map((item) => (
+                  <div className="fact-cell" key={item.label}>
+                    <dt className="fact-label">{item.label}</dt>
+                    <dd className="fact-value">{item.value}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
           </div>
         </section>
 
+        {/* PROJECTS */}
         <section id="proyek" className="section" aria-labelledby="proyek-heading">
-          <div className="section-head">
-            <div>
-              <p className="section-eyebrow">01 / Portofolio</p>
-              <h2 id="proyek-heading" className="section-title">
-                Karya Pilihan
-              </h2>
+          <div className="wrap">
+            <div className="section-header">
+              <div>
+                <h2 id="proyek-heading" className="section-title">
+                  Proyek Pilihan
+                </h2>
+                <p className="section-subtitle">
+                  Proyek web, Android, game 3D, model AI, dan prototipe UI/UX yang pernah saya
+                  kerjakan.
+                </p>
+              </div>
             </div>
 
             <div className="filter-bar" role="group" aria-label="Filter kategori proyek">
-              {PLATFORM_FILTERS.map((platform) => (
-                <button
-                  key={platform}
-                  type="button"
-                  className="filter-pill"
-                  aria-pressed={filter === platform}
-                  onClick={() => setFilter(platform)}
-                >
-                  {platform}
-                </button>
-              ))}
+              {PLATFORM_FILTERS.map((platform) => {
+                const count =
+                  platform === 'Semua'
+                    ? PORTFOLIO_DATA.projects.length
+                    : PORTFOLIO_DATA.projects.filter((p) => p.platform === platform).length;
+                return (
+                  <button
+                    key={platform}
+                    type="button"
+                    className="filter-btn"
+                    aria-pressed={filter === platform}
+                    onClick={() => setFilter(platform)}
+                  >
+                    <span>{platform}</span>
+                    <span className="filter-count mono">{count}</span>
+                  </button>
+                );
+              })}
             </div>
-          </div>
 
-          <div className="project-grid">
-            {visibleProjects.map((project) => {
-              const Icon = PLATFORM_ICONS[project.platform] || Code2;
-              return (
-                <a
-                  key={project.title}
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-card"
-                >
-                  <div className="project-top">
-                    <span className="platform-badge" data-platform={project.platform}>
-                      <Icon size={12} aria-hidden="true" />
-                      {project.platform}
-                    </span>
-                    <ArrowUpRight size={18} className="project-arrow" aria-hidden="true" />
+            <p className="sr-only" aria-live="polite">
+              Menampilkan{' '}
+              {(featuredProject ? 1 : 0) + gridProjects.length} proyek untuk kategori {filter}.
+            </p>
+
+            {featuredProject ? (
+              <article className="featured-card">
+                <div className="featured-visual" aria-label="Ringkasan arsitektur Cursed Priest">
+                  <div className="schematic-top mono">
+                    <span>ARSITEKTUR AI MUSUH</span>
+                    <span className="schematic-badge">Karya Unggulan · {featuredProject.year}</span>
                   </div>
 
-                  <h3 className="project-title">{project.title}</h3>
-                  <p className="project-desc">{project.desc}</p>
+                  <div className="schematic-flow">
+                    <div className="schematic-node">
+                      <span className="schematic-node-label mono">01</span>
+                      <span className="schematic-node-title">Patrol</span>
+                    </div>
+                    <div className="schematic-node schematic-node--active">
+                      <span className="schematic-node-label mono">02</span>
+                      <span className="schematic-node-title">Detect</span>
+                    </div>
+                    <div className="schematic-node">
+                      <span className="schematic-node-label mono">03</span>
+                      <span className="schematic-node-title">Chase</span>
+                    </div>
+                  </div>
 
-                  <div className="tag-list">
-                    {project.tags.map((tag) => (
-                      <span className="tag" key={tag}>
-                        {tag}
-                      </span>
+                  <div className="schematic-meta mono">
+                    {featuredProject.previewMeta.map((meta) => (
+                      <span key={meta}>{meta}</span>
                     ))}
                   </div>
-                </a>
-              );
-            })}
+                </div>
+
+                <div className="featured-content">
+                  <div>
+                    <div className="project-meta-row">
+                      <span className="platform-pill">
+                        <Gamepad2 size={13} aria-hidden="true" />
+                        {featuredProject.platform}
+                      </span>
+                      <span className="project-year mono">{featuredProject.year}</span>
+                    </div>
+
+                    <h3 className="project-title">{featuredProject.title}</h3>
+                    <p className="project-desc">{featuredProject.desc}</p>
+
+                    <div className="project-tags">
+                      {featuredProject.tags.map((tag) => (
+                        <span key={tag} className="tech-tag mono" translate="no">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="case-drawer" style={{ marginBottom: 'var(--space-md)' }}>
+                      <div>
+                        <span className="case-label mono">Masalah</span>
+                        <p className="case-text">{featuredProject.problem}</p>
+                      </div>
+                      <div>
+                        <span className="case-label mono">Implementasi</span>
+                        <p className="case-text">{featuredProject.solution}</p>
+                      </div>
+                      <div>
+                        <span className="case-label mono">Hasil</span>
+                        <p className="case-text">{featuredProject.result}</p>
+                      </div>
+                    </div>
+
+                    <a
+                      href={featuredProject.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn"
+                    >
+                      {featuredProject.ctaLabel}
+                      <ArrowUpRight size={16} aria-hidden="true" />
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ) : null}
+
+            <div className="projects-grid">
+              {gridProjects.map((project) => {
+                const Icon = PLATFORM_ICONS[project.platform] || Code2;
+                const isOpen = expandedProject === project.title;
+
+                return (
+                  <article key={project.title} className="project-card">
+                    <div>
+                      <div className="project-meta-row">
+                        <span className="platform-pill" translate="no">
+                          <Icon size={13} aria-hidden="true" />
+                          {project.platform}
+                        </span>
+                        <span className="project-year mono">{project.year}</span>
+                      </div>
+
+                      <h3 className="project-title">{project.title}</h3>
+                      <p className="project-desc">{project.desc}</p>
+
+                      <div className="project-tags">
+                        {project.tags.map((tag) => (
+                          <span key={tag} className="tech-tag mono" translate="no">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      {isOpen ? (
+                        <div className="case-drawer" style={{ marginBottom: 'var(--space-md)' }}>
+                          <div>
+                            <span className="case-label mono">Masalah</span>
+                            <p className="case-text">{project.problem}</p>
+                          </div>
+                          <div>
+                            <span className="case-label mono">Implementasi</span>
+                            <p className="case-text">{project.solution}</p>
+                          </div>
+                          <div>
+                            <span className="case-label mono">Hasil</span>
+                            <p className="case-text">{project.result}</p>
+                          </div>
+                        </div>
+                      ) : null}
+
+                      <div className="project-footer">
+                        <button
+                          type="button"
+                          className="detail-toggle"
+                          aria-expanded={isOpen}
+                          onClick={() => setExpandedProject(isOpen ? null : project.title)}
+                        >
+                          <span>{isOpen ? 'Tutup detail' : 'Detail kasus'}</span>
+                          {isOpen ? (
+                            <ChevronUp size={15} aria-hidden="true" />
+                          ) : (
+                            <ChevronDown size={15} aria-hidden="true" />
+                          )}
+                        </button>
+
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="project-link"
+                          aria-label={`Buka ${project.title} di tab baru`}
+                        >
+                          <span>{project.ctaLabel || 'Buka'}</span>
+                          <ArrowUpRight size={15} aria-hidden="true" />
+                        </a>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
           </div>
         </section>
 
-        <section id="pengalaman" className="section" aria-labelledby="pengalaman-heading">
-          <div className="section-head">
-            <div>
-              <p className="section-eyebrow">02 / Latar Belakang</p>
+        {/* EXPERIENCE & EDUCATION */}
+        <section
+          id="pengalaman"
+          className="section section--alt"
+          aria-labelledby="pengalaman-heading"
+        >
+          <div className="wrap">
+            <div className="section-header">
               <h2 id="pengalaman-heading" className="section-title">
-                Pengalaman & Pendidikan
+                Pengalaman &amp; Pendidikan
               </h2>
             </div>
-          </div>
 
-          <div className="background-grid">
-            <div className="timeline">
-              {DATA.experience.map((item) => (
-                <article className="timeline-card" key={`${item.role}-${item.period}`}>
-                  <div className="timeline-head">
-                    <h3 className="timeline-role">{item.role}</h3>
-                    <span className="timeline-period">{item.period}</span>
+            <div className="experience-grid">
+              <div className="timeline">
+                {PORTFOLIO_DATA.experience.map((item) => (
+                  <article className="timeline-item" key={`${item.role}-${item.period}`}>
+                    <div className="timeline-head">
+                      <h3 className="timeline-role">{item.role}</h3>
+                      <span className="timeline-period mono">{item.period}</span>
+                    </div>
+                    <p className="timeline-org">
+                      {item.org} · {item.type}
+                    </p>
+                    <p className="timeline-desc">{item.desc}</p>
+                  </article>
+                ))}
+              </div>
+
+              <div className="credentials-stack">
+                <article className="credential-card">
+                  <div className="credential-head">
+                    <GraduationCap size={16} className="credential-icon" aria-hidden="true" />
+                    <span>Pendidikan</span>
                   </div>
-                  <p className="timeline-org">{item.org}</p>
-                  <p className="timeline-desc">{item.desc}</p>
+                  <h3 className="timeline-role">{PORTFOLIO_DATA.education.school}</h3>
+                  <p className="timeline-org" style={{ marginTop: '4px' }}>
+                    {PORTFOLIO_DATA.education.degree}
+                  </p>
+                  <span className="timeline-period mono">{PORTFOLIO_DATA.education.period}</span>
                 </article>
-              ))}
-            </div>
 
-            <div className="side-stack">
-              <article className="panel">
-                <div className="panel-head">
-                  <span className="panel-icon" aria-hidden="true">
-                    <GraduationCap size={18} />
-                  </span>
-                  <h3 className="panel-title">Pendidikan</h3>
-                </div>
-                <p className="timeline-role">{DATA.education.school}</p>
-                <p className="timeline-org">
-                  {DATA.education.degree} · {DATA.education.location}
-                </p>
-                <span className="timeline-period">{DATA.education.period}</span>
-              </article>
-
-              <article className="panel">
-                <div className="panel-head">
-                  <span className="panel-icon" aria-hidden="true">
-                    <Award size={18} />
-                  </span>
-                  <h3 className="panel-title">Sertifikasi</h3>
-                </div>
-                <ul className="cert-list">
-                  {DATA.certificates.map((cert) => (
-                    <li className="cert-item" key={cert.name}>
-                      <span className="cert-name">{cert.name}</span>
-                      <span className="cert-issuer">{cert.issuer}</span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            </div>
-          </div>
-        </section>
-
-        <section id="keahlian" className="section" aria-labelledby="keahlian-heading">
-          <div className="section-head">
-            <div>
-              <p className="section-eyebrow">03 / Stack</p>
-              <h2 id="keahlian-heading" className="section-title">
-                Keahlian Teknis
-              </h2>
-            </div>
-          </div>
-
-          <div className="skills-grid">
-            {DATA.skills.map((group) => {
-              const Icon = group.icon;
-              return (
-                <article className="skill-card" key={group.category}>
-                  <div className="panel-head">
-                    <span className="panel-icon" aria-hidden="true">
-                      <Icon size={18} />
-                    </span>
-                    <h3 className="panel-title">{group.category}</h3>
+                <article className="credential-card">
+                  <div className="credential-head">
+                    <Award size={16} className="credential-icon" aria-hidden="true" />
+                    <span>Sertifikasi</span>
                   </div>
-                  <div className="skill-tags">
-                    {group.items.map((item) => (
-                      <span className="skill-tag" key={item}>
-                        {item}
-                      </span>
+                  <ul className="cert-list">
+                    {PORTFOLIO_DATA.certificates.map((cert) => (
+                      <li className="cert-row" key={cert.name}>
+                        <span className="cert-title">{cert.name}</span>
+                        <span className="cert-issuer">{cert.issuer}</span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
                 </article>
-              );
-            })}
+              </div>
+            </div>
           </div>
         </section>
 
-        <section id="kontak" className="section" aria-labelledby="kontak-heading">
-          <div className="section-head">
-            <div>
-              <p className="section-eyebrow">04 / Kontak</p>
-              <h2 id="kontak-heading" className="section-title">
-                Mari Terhubung
-              </h2>
-              <p className="contact-lead">
-                Terbuka untuk diskusi proyek web, aplikasi Android, game development, maupun peluang
-                magang dan kolaborasi.
-              </p>
+        {/* SKILLS */}
+        <section id="keahlian" className="section" aria-labelledby="keahlian-heading">
+          <div className="wrap">
+            <div className="section-header">
+              <div>
+                <h2 id="keahlian-heading" className="section-title">
+                  Keahlian Teknis
+                </h2>
+                <p className="section-subtitle">
+                  Bahasa, framework, dan alat yang saya gunakan sehari-hari dalam proyek.
+                </p>
+              </div>
+            </div>
+
+            <div className="skills-index">
+              {PORTFOLIO_DATA.skills.map((group) => {
+                const Icon = group.icon;
+                return (
+                  <article className="skill-group-row" key={group.category}>
+                    <div>
+                      <div className="skill-group-head">
+                        <Icon size={18} className="credential-icon" aria-hidden="true" />
+                        <h3 className="skill-group-title">{group.category}</h3>
+                      </div>
+                      <p className="skill-group-summary">{group.summary}</p>
+                    </div>
+
+                    <ul className="skill-grid">
+                      {group.items.map((item) => (
+                        <li className="skill-cell" key={item} translate="no">
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                );
+              })}
             </div>
           </div>
+        </section>
 
-          <div className="contact-grid">
-            {contacts.map((item) => {
-              const Icon = item.icon;
-              return (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target={item.external ? '_blank' : undefined}
-                  rel={item.external ? 'noopener noreferrer' : undefined}
-                  className="contact-card"
-                >
-                  <span className="contact-icon" aria-hidden="true">
-                    <Icon size={19} />
-                  </span>
-                  <span className="contact-meta">
-                    <span className="contact-label">{item.label}</span>
-                    <span className="contact-value">{item.value}</span>
-                  </span>
-                </a>
-              );
-            })}
+        {/* CONTACT */}
+        <section id="kontak" className="section section--alt" aria-labelledby="kontak-heading">
+          <div className="wrap">
+            <div className="section-header">
+              <div>
+                <h2 id="kontak-heading" className="section-title">
+                  Mari Terhubung
+                </h2>
+                <p className="section-subtitle">
+                  Kirim pesan melalui salah satu kanal di bawah jika ingin berdiskusi soal magang,
+                  proyek lepas, atau kolaborasi teknis.
+                </p>
+              </div>
+            </div>
+
+            <div className="contact-grid">
+              {CONTACTS.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target={item.external ? '_blank' : undefined}
+                    rel={item.external ? 'noopener noreferrer' : undefined}
+                    className="contact-card"
+                  >
+                    <span className="contact-info">
+                      <span className="contact-icon-wrap" aria-hidden="true">
+                        <Icon size={18} />
+                      </span>
+                      <span style={{ minWidth: 0 }}>
+                        <span className="contact-label mono">{item.label}</span>
+                        <span className="contact-value">{item.value}</span>
+                      </span>
+                    </span>
+                    <ArrowUpRight size={17} className="contact-arrow" aria-hidden="true" />
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </section>
       </main>
 
-      <footer className="footer">
-        <div className="container footer-inner">
-          <p>© {new Date().getFullYear()} {DATA.name}</p>
-          <a href="#beranda" className="footer-top">
-            Kembali ke atas ↑
+      <footer className="site-footer">
+        <div className="wrap footer-inner">
+          <p>
+            © 2026 {PORTFOLIO_DATA.name} · {PORTFOLIO_DATA.location}
+          </p>
+          <a href="#beranda" className="footer-top-link">
+            <span>Kembali ke atas</span>
+            <ArrowUp size={15} aria-hidden="true" />
           </a>
         </div>
       </footer>
